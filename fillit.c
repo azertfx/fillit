@@ -6,12 +6,12 @@
 /*   By: anabaoui <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/20 13:58:09 by anabaoui          #+#    #+#             */
-/*   Updated: 2018/12/02 17:01:22 by anabaoui         ###   ########.fr       */
+/*   Updated: 2018/12/04 17:53:32 by anabaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
-
+#include <stdio.h>
 void	tb_cpy(int tb_list1[2][4], int tb_list2[2][4])
 {
 	int i;
@@ -111,8 +111,7 @@ void	fillit(char *file)
 			t_tab = ft_strsplit(buff, '\n');
 			fill_tb(t_tab, &t_list);
 		}
-		top_left(&t_list);
-		let_play(&t_list);
+		let_play(&t_list, 0);
 	}
 	else
 		ft_putstr("error\n");
