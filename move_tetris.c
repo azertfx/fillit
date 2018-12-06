@@ -6,18 +6,36 @@
 /*   By: anabaoui <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 15:10:17 by anabaoui          #+#    #+#             */
-/*   Updated: 2018/12/06 14:51:11 by anabaoui         ###   ########.fr       */
+/*   Updated: 2018/12/06 18:16:46 by anabaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
-#include <stdio.h>
+
+void	fillit_result(char **mr_tetris)
+{
+	int i;
+	int j;
+
+	i = 0;
+	while (mr_tetris[i])
+	{
+		j = 0;
+		while (mr_tetris[i][j])
+		{
+			ft_putchar(mr_tetris[i][j]);
+			j++;
+		}
+		ft_putchar('\n');
+		i++;
+	}
+}
+
 void	remove_tetris(char **mr_tetris, tr_list **t_list)
 {
 	int i;
 	int j;
 
-	printf("remove_tetris\n");
 	i = 0;
 	while (mr_tetris[i])
 	{
@@ -37,7 +55,6 @@ void	move_tetris(int tb_list[2][4], int i)
 	int j;
 	int	min;
 
-	printf("move_tetris\n");
 	j = 0;
 	min = 3;
 	while (j < 4)
@@ -55,7 +72,6 @@ void	top_left(tr_list **t_list)
 {
 	tr_list *t_temp;
 
-	printf("top_left\n");
 	t_temp = *t_list;
 	while (t_temp)
 	{

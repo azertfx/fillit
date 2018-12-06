@@ -6,7 +6,7 @@
 /*   By: anabaoui <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/20 13:56:10 by anabaoui          #+#    #+#             */
-/*   Updated: 2018/12/06 14:49:49 by anabaoui         ###   ########.fr       */
+/*   Updated: 2018/12/06 18:17:53 by anabaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,6 @@ void			top_left(tr_list **t_list);
 void			let_play(tr_list **t_list, int i);
 void			remove_tetris(char **mr_tetris, tr_list **t_list);
 void			move_tetris(int tb_list[2][4], int i);
+void			fillit_result(char **mr_tetris);
 
 #endif

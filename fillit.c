@@ -6,7 +6,7 @@
 /*   By: anabaoui <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/20 13:58:09 by anabaoui          #+#    #+#             */
-/*   Updated: 2018/12/04 17:53:32 by anabaoui         ###   ########.fr       */
+/*   Updated: 2018/12/06 20:11:33 by anabaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void	fillit(char *file)
 			t_tab = ft_strsplit(buff, '\n');
 			fill_tb(t_tab, &t_list);
 		}
-		let_play(&t_list, 0);
+		let_play(&t_list, 4);
 	}
 	else
 		ft_putstr("error\n");
