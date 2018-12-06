@@ -6,7 +6,7 @@
 /*   By: anabaoui <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/02 14:04:51 by anabaoui          #+#    #+#             */
-/*   Updated: 2018/12/05 14:56:39 by anabaoui         ###   ########.fr       */
+/*   Updated: 2018/12/06 15:14:38 by anabaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,19 @@ char	**g_matrix(int i)
 		while (y < i)
 		{
 			tb_matrix[x][y] = '.';
+			printf("%c", tb_matrix[x][y]);
 			y++;
 		}
+		printf("\n");
 		tb_matrix[x][y] = '\0';
 		x++;
 	}
+	printf("\n");
 	tb_matrix[x] = 0;
 	return (tb_matrix);
 }
 
-void	fill_mr(char **mr_tetris, tr_list **t_list)
+void	fill_mr(char **mr_tetris, int u, int v, tr_list **t_list)
 {
 	int i;
 	int j;
@@ -55,7 +58,7 @@ void	fill_mr(char **mr_tetris, tr_list **t_list)
 	{
 		x = (*t_list)->tetris[i++][j];
 		y = (*t_list)->tetris[i--][j++];
-		mr_tetris[x][y] = 'A' + (*t_list)->id;
+		mr_tetris[x + u][y + v] = 'A' + (*t_list)->id;
 		len++;
 	}
 	i = 0;
@@ -73,51 +76,62 @@ void	fill_mr(char **mr_tetris, tr_list **t_list)
 	printf("\n");
 }
 
-int		tetris_validate(char **mr_tetris, tr_list **t_list, int id, int len)
+int		tetris_validate(char **mr_tetris, int u, int v, tr_list **t_list)
 {
+	int x;
+	int y;
 	int i;
 	int j;
-	int	x;
-	int y;
-	int validate;
-	tr_list *t_temp;
+	int len;
 
-	printf("tetris_validate\n");
+	len = 0;
 	i = 0;
 	j = 0;
-	t_temp = *t_list;
-	while (t_temp->id != id)
-		t_temp = t_temp->next;
 	while (len < 4)
 	{
+		printf("pp\n");
 		x = (*t_list)->tetris[i++][j];
 		y = (*t_list)->tetris[i--][j++];
-		if (mr_tetris[x][y] != '.')
-		{
-			validate = move_next_validate(t_temp->tetris);
-			if(validate)
-				return (tetris_validate(mr_tetris, &t_temp, t_temp->id, 0));
+		printf("x = %i y = %i\n",x,y);
+		if (!mr_tetris[x + u])
 			return (0);
-		}
+		if (mr_tetris[x + u][y + v] != '.')
+			return (0);
 		len++;
 	}
-	fill_mr(mr_tetris, t_list);
+	fill_mr(mr_tetris, u, v, t_list);
 	return (1);
 }
 
 int		validate_format(char **mr_tetris, tr_list **t_list)
 {
-	tr_list *t_temp;
+	int		i;
+	int		j;
 
 	printf("validate_format\n");
-	t_temp = *t_list;
-	if (tetris_validate(mr_tetris, &t_temp, t_temp->id, 0))
-		validate_format(mr_tetris, &t_temp->next);
-	if (move_next_validate(t_temp->tetris))
+	i = 0;
+	if (!(*t_list))
+		return (1);
+	printf("go\n");
+	while (mr_tetris[i])
 	{
-		top_left(&t_temp);
-		remove_tetris(mr_tetris, &t_temp);
-		validate_format(mr_tetris, &t_temp->next);
+		j = 0;
+		while (mr_tetris[i][j])
+		{
+			if (mr_tetris[i][j] == '.')
+			{
+				printf("i = %d , j = %d\n", i, j);
+				if (tetris_validate(mr_tetris, i, j, t_list))
+				{
+					printf("ok\n");
+					if(validate_format(mr_tetris, &(*t_list)->next))
+						return (1);
+					remove_tetris(mr_tetris, t_list);
+				}
+			}
+			j++;
+		}
+		i++;
 	}
 	return (0);
 }
@@ -129,16 +143,16 @@ void	let_play(tr_list **t_list, int i)
 
 	printf("let_play\n");
 	t_temp = *t_list;
-	top_left(t_list);
 	final_tetris = g_matrix(2 + i);
+	top_left(&t_temp);
 	if (validate_format(final_tetris, &t_temp))
 	{
 //		print_tetris();
-		printf("valide format\n");
+		printf("done valide format\n");
 	}
 	else
 	{
-//		return let_play(t_list, ++i);
-		printf("not valide\n");
+		printf("fail not valide\n");
+		return let_play(t_list, ++i);
 	}
 }
