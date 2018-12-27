@@ -6,22 +6,23 @@
 #    By: anabaoui <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/20 14:49:41 by anabaoui          #+#    #+#              #
-#    Updated: 2018/11/23 15:09:53 by anabaoui         ###   ########.fr        #
+#    Updated: 2018/12/18 19:12:00 by anabaoui         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = fillit.a
+NAME = fillit
 
 all : $(NAME)
 
 $(NAME) :
-	@gcc -Wall -Wextra -Werror -c *.c
-	@ar rc $(NAME) *.o
+	@make -C libft
+	@gcc -Wall -Wextra -Werror src/*.c libft/libft.a -o $(NAME)
 
 clean :
-	@rm -f *.o
+	@make clean -C libft
 
-fclean : clean
+fclean :
+	@make fclean -C libft
 	@rm -f $(NAME)
 
 re : fclean all
